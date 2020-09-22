@@ -1,0 +1,19 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pytest = "*"
+
+[packages]
+# Libraries you need
+fastapi = "*"
+typing = "*"
+uvicorn = "*"
+pydantic = {extras = ["email"], version = "*"}
+"subprocess.run" = "*"
+numpy = "*"
+
+[pipenv]
+allow_prereleases = true

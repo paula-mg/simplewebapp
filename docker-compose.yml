@@ -1,0 +1,35 @@
+version: "3.7"
+services:
+
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: my-secret-pw
+    volumes:
+      - my-datavolume:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  fast-api:
+     build: ./
+     restart: always
+     ports:
+       - "8000:80"
+     volumes:
+       -   docker-volume-absolute-path-volume:/app:rw
+volumes:
+  my-datavolume:
+  docker-volume-absolute-path-volume:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /Users/paula/simplewebapp/app

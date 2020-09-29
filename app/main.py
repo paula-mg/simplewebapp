@@ -37,8 +37,8 @@ async def save_user(username: int, password: str):
     c = cursor.fetchone()
     cursor.close()
     conn.close()
-    return c
-
+    return "changed"
+    
 @app.get('/testUserLogin')
 async def login_user(username: int, password:str):
     conn = mysql.connector.connect(host=d_host,
@@ -54,7 +54,7 @@ async def login_user(username: int, password:str):
 
 @app.get("/longprocess/{long_process}")
 async def print_longprocess(process: str):
-    command = ["ls", "-lha"]
+    command = process.split(" ") 
     run(command, shell=True)
     process = run(command, stdout=PIPE)
     process = process.stdout.decode()

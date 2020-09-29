@@ -8,3 +8,6 @@ RUN pip install --no-cache-dir mysql.connector
 VOLUME /app
 
 COPY ./app /app
+
+CMD /start-reload.sh
+

@@ -4,6 +4,8 @@ from pydantic import BaseModel
 from subprocess import run, PIPE
 from fastapi import FastAPI, Response, status, Query, Form
 import mysql.connector
+from kafka import KafkaProducer
+from kafka.errors import KafkaError
 
 
 app = FastAPI()
@@ -37,6 +39,7 @@ async def save_user(username: int, password: str):
     c = cursor.fetchone()
     cursor.close()
     conn.close()
+    send_kakfa()
     return "changed"
     
 @app.get('/testUserLogin')
@@ -60,5 +63,15 @@ async def print_longprocess(process: str):
     process = process.stdout.decode()
     return process
 
+
+
+def send_kakfa():
+
+    producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
+
+    #Asynchronous by default
+    future = producer.send('test1', value="1".encode())
+
+    producer.flush()
 
 
